@@ -1,3 +1,19 @@
+/*
+Добавить 4-го игрока Medic, у которого есть
+способность лечить после каждого раунда на N-ное количество единиц здоровья
+ только одного из членов команды, имеющего здоровье менее 100 единиц. Мертвых
+ героев медик оживлять не может, и лечит он до тех пор пока жив сам. Медик не участвует
+ в бою, но получает урон от Босса. Сам себя медик лечить не может.
+Добавить n-го игрока, Golem, который имеет увеличенную жизнь, но слабый удар.
+Может принимать на себя 1/5 часть урона исходящего от босса по другим игрокам.
+Добавить n-го игрока, Lucky, имеет шанс уклонения от ударов босса.
+Добавить n-го игрока, Berserk, блокирует часть удара босса по себе и прибавляет
+заблокированный урон к своему урону и возвращает его боссу
+Добавить n-го игрока, Thor, удар по боссу имеет шанс оглушить босса
+на 1 раунд, вследствие чего босс пропускает 1 раунд и не наносит урон героям. // random.nextBoolean(); - true, false
+
+
+*/
 package com.company;
 
 import java.util.Random;
@@ -6,9 +22,9 @@ public class Main {
     public static String bossDefenceType;
     public static int bossDamage = 50;
     public static int bossHealth = 700;
-    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medic"};
-    public static int[] heroesDamage = {25, 20, 15, 0};
-    public static int[] heroesHealth = {320, 270, 250, 400};
+    public static String[] heroesAttackType = {"Physical", "Magical", "Kinetic", "Medic", "Golem"};
+    public static int[] heroesDamage = {25, 20, 15, 0, 10};
+    public static int[] heroesHealth = {320, 270, 250, 400, 500};
     public static int roundNumber = 0;
 
     public static void main(String[] args) {
@@ -17,6 +33,13 @@ public class Main {
             round();
         }
     }
+
+    public static void heroGolem() {
+
+    }
+
+
+
 
     public static void round() {
         roundNumber++;
@@ -61,7 +84,7 @@ public class Main {
                 }
             }
         }
-    }
+    } // босс бьет, уменьшается жизни героев на силу удара босса
 
     public static void heroesHit() {
         for (int i = 0; i < heroesDamage.length; i++) {
@@ -81,6 +104,8 @@ public class Main {
                         bossHealth = 0;
                     } else {
                         bossHealth = bossHealth - heroesDamage[i];
+
+
                     }
                 }
             }
@@ -90,14 +115,9 @@ public class Main {
     public static boolean isGameFinished() {
         if (bossHealth <= 0) {
             System.out.println("Heroes won!!!");
-            return true;
+            return true; // если герои победили, то игра закончена
         }
-
-        /*if (heroesHealth[0] <= 0 && heroesHealth[1] <= 0 && heroesHealth[2] <= 0) {
-            System.out.println("Boss won!!!");
-            return true;
-        }*/
-
+        // если здоровье меньше или равно нулю, то тогда выиграли герои
         int totalHealth = 0;
         for (int health : heroesHealth) {
             totalHealth += health; // totalHealth = totalHealth + health;
@@ -115,7 +135,8 @@ public class Main {
         for (int i = 0; i < heroesHealth.length; i++) {
             System.out.println(heroesAttackType[i] + " health: " +
                     heroesHealth[i] + " (" + heroesDamage[i] + ")");
-        }
+        } // здесь мы распечатываем в консоль здоровье босса и удар босса
+        // распечатываем тип атаки героя + здоровье + удар каждого игрока
     }
 }
 
